@@ -110,6 +110,13 @@ app.post('/chat', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`🌸 Hutao AI berjalan di http://localhost:${PORT}`);
-});
+// ===== KONDISI UNTUK VERCEL ATAU LOKAL =====
+if (process.env.VERCEL) {
+  // Vercel: export app sebagai default
+  export default app;
+} else {
+  // Lokal: jalankan server
+  app.listen(PORT, () => {
+    console.log(`🌸 Hutao AI berjalan di http://localhost:${PORT}`);
+  });
+}
