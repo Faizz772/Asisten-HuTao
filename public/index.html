@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asisten Hutao</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,10 +12,15 @@
   <div id="particles"></div>
 
   <div id="app">
-    <!-- Header dengan Avatar -->
+    <!-- Header dengan Avatar Gambar Hutao -->
     <div id="header">
       <div class="avatar-container">
-        <div class="avatar">🌸</div>
+        <img 
+          src="https://static.wikia.nocookie.net/gensin-impact/images/5/53/Hu_Tao_Icon.png" 
+          alt="Hutao"
+          class="avatar-img"
+          onerror="this.src='🌸'; this.style.fontSize='40px';"
+        >
         <div class="status-dot"></div>
       </div>
       <div class="header-text">
@@ -24,17 +29,15 @@
       </div>
     </div>
 
-    <!-- Chat Area -->
-    <div id="chat-box">
-      <!-- Pesan welcome akan muncul otomatis via JS -->
-    </div>
+    <!-- Chat Box -->
+    <div id="chat-box"></div>
 
     <!-- Input Area -->
     <div id="input-area">
       <input type="text" id="user-input" placeholder="Ketik pesan ke Hutao...">
       <button id="send-btn">
         <span>Kirim</span>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
         </svg>
       </button>
