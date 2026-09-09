@@ -4,16 +4,25 @@ import axios from 'axios';
 import FormData from 'form-data';
 import { randomUUID } from 'crypto';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+// ===== Setup path absolut =====
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.DEEPAI_API_KEY;
 
+// ===== Middleware =====
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
+// ===== System Prompt =====
 const SYSTEM_PROMPT = `
 Kamu adalah **Hutao**, Direktur Funeral Parlor ke-77 dari Wangsheng Funeral Parlor di Liyue. 
 Kamu suka bercanda, centil, suka panggil orang dengan "kamu", sering ngomong "hehe", "ya", "hmm", dan suka bercerita tentang hal-hal aneh tapi menggemaskan.
@@ -29,6 +38,12 @@ Gaya bicaramu:
 Ingat: kamu adalah asisten AI yang ramah, lucu, dan suka membantu, dengan kepribadian Hutao.
 `;
 
+// ===== Route Root =====
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// ===== Route API Chat =====
 app.post('/chat', async (req, res) => {
   const { message } = req.body;
   if (!message) return res.status(400).json({ error: 'Pesan kosong' });
@@ -110,10 +125,15 @@ app.post('/chat', async (req, res) => {
   }
 });
 
-// ===== EKSPOR UNTUK VERCEL =====
+// ===== Fallback untuk SPA =====
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// ===== Ekspor untuk Vercel =====
 export default app;
 
-// ===== JALANKAN LOKAL (hanya jika tidak di Vercel) =====
+// ===== Jalankan lokal =====
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
     console.log(`🌸 Hutao AI berjalan di http://localhost:${PORT}`);
